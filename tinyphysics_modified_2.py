@@ -136,7 +136,8 @@ class TinyPhysicsSimulator:
 
   def control_step(self, step_idx: int) -> None:
     if step_idx >= CONTROL_START_IDX:
-      action = self.controller.update(self.target_lataccel_history[step_idx], self.current_lataccel, self.state_history[step_idx], self.action_history[-1]) # returning last action made
+      last_action = self.action_history[len(self.action_history)-1]
+      action = self.controller.update(self.target_lataccel_history[step_idx], self.current_lataccel, self.state_history[step_idx], last_action)
     else:
       action = self.data['steer_command'].values[step_idx]
     action = np.clip(action, STEER_RANGE[0], STEER_RANGE[1])
